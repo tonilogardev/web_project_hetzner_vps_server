@@ -15,4 +15,4 @@
 - Documentation listed step by step
 
 ## Let's go!
-- [Documentation](./documentation/001_start_project.md) 
+- [Documentation](./001_documentation/001_start_project.md) 
