@@ -1,3 +1,6 @@
+
+data/
+002_ssh/
 # Logs
 logs
 *.log
