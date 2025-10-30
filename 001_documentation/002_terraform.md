@@ -91,19 +91,43 @@ Enter https://dns.hetzner.com/settings/api-token and generate dns API token.
 Store the secrets outside the repository (see `.gitignore`).  
 Each `.env` file must export the variables with the `TF_VAR_` prefix so Terraform picks them up automatically.
 
-```bash
-# .env.development
-TF_VAR_cloud_api_token="<hetzner-cloud-token>"
-TF_VAR_dns_api_token="<hetzner-dns-token>"
-TF_VAR_domain_name="<domain>"
-TF_VAR_admin_email="<admin-email>"
 
-# .env.production
+[.env.development](../.env.development) 
+```bash
 TF_VAR_cloud_api_token="<hetzner-cloud-token>"
 TF_VAR_dns_api_token="<hetzner-dns-token>"
 TF_VAR_domain_name="<domain>"
 TF_VAR_admin_email="<admin-email>"
+TF_VAR_ssh_public_key_path="./ssh/id_ed25519_vps_hetzner.pub"
+TF_VAR_ssh_key_name="id_ed25519_vps_hetzner"
+TF_VAR_server_name="web-project-dev-server"
+TF_VAR_server_image="ubuntu-24.04"
+TF_VAR_server_type="cx22"
+TF_VAR_server_location="fsn1"
+TF_VAR_docker_compose_version="v2.24.0"
+TF_VAR_subdomains_to_register='["www","satellite","portfolio"]'
+TF_VAR_project_label="web_project_hetzner_vps_server"
 ```
+
+[.env.production](../.env.production) 
+```bash
+TF_VAR_cloud_api_token="<hetzner-cloud-token>"
+TF_VAR_dns_api_token="<hetzner-dns-token>"
+TF_VAR_domain_name="<domain>"
+TF_VAR_admin_email="<admin-email>"
+TF_VAR_ssh_public_key_path="./ssh/id_ed25519_vps_hetzner.pub"
+TF_VAR_ssh_key_name="id_ed25519_vps_hetzner"
+TF_VAR_server_name="web-project-prod-server"
+TF_VAR_server_image="ubuntu-24.04"
+TF_VAR_server_type="cx22"
+TF_VAR_server_location="fsn1"
+TF_VAR_docker_compose_version="v2.24.0"
+TF_VAR_subdomains_to_register='["www","satellite","portfolio"]'
+TF_VAR_project_label="web_project_hetzner_vps_server"
+```
+
+> Nota: las listas (`TF_VAR_subdomains_to_register`) deben declararse en formato JSON válido.
+> Si ya tienes una VPS activa y solo quieres gestionar DNS, añade `TF_VAR_existing_server_ipv4`.
 
 Load the file before running Terraform.
 
@@ -116,6 +140,17 @@ terraform -chdir=002_terraform init
 
 > Run the same block with `.env.production` when you need production values.
 
+Basic workflow to refresh providers and preview changes:
+
+```bash
+set -a
+source .env.development
+set +a
+rm -rf 002_terraform/.terraform
+terraform -chdir=002_terraform init -upgrade
+terraform -chdir=002_terraform plan
+```
+
 [←Index](#index)
 
 ## 5 Terraform project scaffold
@@ -124,21 +159,15 @@ Directory layout under `002_terraform/`.
 
 ```
 002_terraform/
-├── main.tf                  # Future resources
+├── dns.tf                   # DNS records in Hetzner DNS
+├── outputs.tf               # Exported values (IPs, zone info)
 ├── providers.tf             # hcloud and hetznerdns providers
-├── variables.tf             # cloud_api_token and dns_api_token definitions
+├── scripts/
+│   └── init_server.sh.tpl   # cloud-init bootstrap script
+├── server.tf                # VPS + SSH key definition
+├── variables.tf             # Definitions for all input variables
 └── ssh/
     ├── id_ed25519_vps_hetzner
     └── id_ed25519_vps_hetzner.pub
 ```
 
-Initialize Terraform after loading the environment.
-
-```bash
-set -a
-source .env.development
-set +a
-terraform -chdir=002_terraform init
-```
-
-[←Index](#index)
