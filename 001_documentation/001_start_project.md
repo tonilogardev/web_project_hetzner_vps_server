@@ -71,4 +71,14 @@ Now, clone the repository to your local machine using the HTTPS URL you find in 
 git clone https://github.com/tonilogardev/web_project_hetzner_vps_server.git
 ```
 
+Create and move main_dev_pro branch.
+
+```bash
+git branch main_dev_pro
+git checkout main_dev_pro
+```
+
 [←Index](#index)
+
+## Let's go!
+- [Documentation](./002_terraform.md) 
