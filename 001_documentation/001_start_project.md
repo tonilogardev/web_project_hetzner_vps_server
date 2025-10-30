@@ -25,7 +25,7 @@
 We use **Let's Encrypt** to validate https  
 Let's Encrypt does not work with IP address, it demands a register domain.  
 
-A **real" domain** give us:  
+A **real domain** give us:  
 -**Security**: It guarantees you are the owner.  
 -**Automatic update**: SSl certificates are vinculate with the domain, IPs can change.  
 -**SSL Wildcard Certificate**: We use one SSL certificate in all subdomains.   
@@ -61,6 +61,7 @@ nslookup tonilogar.com  # Show IP
 -***Select license [LICENSE](../LICENSE)***.
 
 [←Index](#index)
+
 
 
 ## 4 Create a GitHub Personal Access Token (PAT)
