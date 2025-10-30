@@ -12,6 +12,7 @@
   [.env.production](./.env.production)  
 - All parameterized variables.
 - Less is more.
+- only two branch main and main_dev_pro
 - Documentation listed step by step
 
 ## Let's go!
