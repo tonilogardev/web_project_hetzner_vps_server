@@ -171,3 +171,4 @@ Directory layout under `002_terraform/`.
     └── id_ed25519_vps_hetzner.pub
 ```
 
+El archivo `scripts/init_server.sh.tpl` se entrega como cloud-init para instalar Docker, Certbot y dejar la VPS lista en el primer arranque.
