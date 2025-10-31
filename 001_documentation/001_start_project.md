@@ -81,4 +81,4 @@ git checkout main_dev_pro
 [←Index](#index)
 
 ## Let's go!
-- [Documentation](./002_terraform.md) 
+- [002_terraform](./002_terraform.md) 
