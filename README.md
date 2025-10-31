@@ -17,3 +17,6 @@
 
 ## Let's go!
 - [001_start_project](./001_documentation/001_start_project.md) 
+- [002_hetzner_login_domain_API_tokens](./001_documentation/002_hetzner_login_domain_API_tokens.md)
+- [003_terraform](./001_documentation/003_terraform.md)
+- [004_check_server](./001_documentation/004_check_server.md)
