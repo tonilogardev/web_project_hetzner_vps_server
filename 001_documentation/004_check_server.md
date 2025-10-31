@@ -56,7 +56,7 @@ docker compose version
 certbot --version
 ```
 
-Inspect the certificate directory (replace the domain if needed).
+Inspect the certificate directory and show the certificate.
 
 ```bash
 ls -l /etc/letsencrypt/live/<domain>
@@ -64,6 +64,11 @@ openssl x509 -in /etc/letsencrypt/live/<domain>/cert.pem -noout -text
 ```
 
 Ensure `DNS:<domain>` and `DNS:*.<domain>` appear under `Subject Alternative Name`.
+
+```bash
+X509v3 Subject Alternative Name: 
+                DNS:*.tonilogar.com, DNS:tonilogar.com
+```
 
 [←Index](#index)
 
@@ -82,8 +87,9 @@ Remove the stale entry and reconnect:
 ```bash
 ssh-keygen -R <server_ipv4>
 ```
-
-Run the SSH command again and accept the new fingerprint.
+```bash
+ssh -i 002_terraform/ssh/id_ed25519_vps_hetzner root@<server_ipv4>
+```
 
 [←Index](#index)
 ```

@@ -1,0 +1,68 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+      - main_dev_pro
+
+env:
+  # Ruta del proyecto en la VPS
+  PROJECT_DIR: /root/web_project_hetzner_vps_server
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -euo pipefail
+
+            BRANCH="${{ github.ref_name }}"
+            REPO_SSH_URL="git@github.com:${{ github.repository }}.git"
+
+            mkdir -p ~/.ssh
+            chmod 700 ~/.ssh
+
+            echo '${{ secrets.GIT_DEPLOY_KEY }}' > ~/.ssh/github_deploy_key  # clave de sólo lectura
+            chmod 600 ~/.ssh/github_deploy_key
+
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+            export GIT_SSH_COMMAND="ssh -i ~/.ssh/github_deploy_key"
+
+            echo "Deploying branch ${BRANCH} to ${PROJECT_DIR}"
+
+            mkdir -p "${PROJECT_DIR}"
+            cd "${PROJECT_DIR}"
+
+            if [ ! -d ".git" ]; then
+              git clone "${REPO_SSH_URL}" .
+            else
+              git remote set-url origin "${REPO_SSH_URL}"
+              git fetch origin "${BRANCH}:${BRANCH}"
+            fi
+
+            git checkout "${BRANCH}"
+            git reset --hard "origin/${BRANCH}"
+
+            if [ ! -f ".env.production" ]; then  # evitamos desplegar sin variables
+              echo "ERROR: .env.production file not found. Deployment aborted." >&2
+              exit 1
+            fi
+
+            set -a
+            source .env.production
+            set +a
+
+            echo "Starting docker compose (build + up)..."
+            ENVIRONMENT=production docker compose up -d --build --remove-orphans
+
+            docker compose ps
+
+            rm -f ~/.ssh/github_deploy_key

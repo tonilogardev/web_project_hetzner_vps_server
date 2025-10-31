@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #0ea5e9, #1f2937 70%);
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 1rem;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.6);
+}
+
+h1 {
+  margin-bottom: 1rem;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}

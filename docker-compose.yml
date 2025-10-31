@@ -1,1 +1,11 @@
-docker-compose.yml
+services:
+  hello-world:
+    build:
+      context: ./services/hello
+    container_name: hello_world_app
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${ENVIRONMENT:-development}
+      PORT: 3000
+    ports:
+      - "${HELLO_WORLD_PORT:-3000}:3000"
