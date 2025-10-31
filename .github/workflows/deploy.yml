@@ -23,6 +23,7 @@ jobs:
           script: |
             set -euo pipefail
 
+            PROJECT_DIR="${PROJECT_DIR:-/root/web_project_hetzner_vps_server}"
             BRANCH="${{ github.ref_name }}"
             REPO_SSH_URL="git@github.com:${{ github.repository }}.git"
 
