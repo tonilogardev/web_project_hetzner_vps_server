@@ -1,0 +1,29 @@
+upstream app_backend {
+    server ${TARGET_SERVICE_HOST}:${TARGET_SERVICE_PORT};
+}
+
+server {
+    listen 80;
+    server_name ${NGINX_SERVER_NAME};
+
+    resolver ${NGINX_DNS_RESOLVERS};
+    resolver_timeout ${NGINX_DNS_RESOLVER_TIMEOUT};
+
+    # TODO: promote this block to listen 443 ssl once certificates are provisioned.
+    # ssl_protocols ${NGINX_SSL_PROTOCOLS};
+    # ssl_ciphers ${NGINX_SSL_CIPHERS};
+    # ssl_session_timeout ${NGINX_SSL_SESSION_TIMEOUT};
+    # ssl_session_cache ${NGINX_SSL_SESSION_CACHE};
+
+    location / {
+        proxy_pass http://app_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /health {
+        proxy_pass http://app_backend/health;
+    }
+}
