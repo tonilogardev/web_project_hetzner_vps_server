@@ -1,0 +1,54 @@
+# Backend Auth0 entrypoint
+server {
+    listen ${NGINX_HTTP_PORT};
+    listen [::]:${NGINX_HTTP_PORT};
+    server_name ${NGINX_SERVER_NAME};
+
+    location / {
+        proxy_pass http://${BACKEND_SERVICE_NAME}:${PORT_BACKEND_AUTH0};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    location /.well-known/acme-challenge/ {
+        root ${VOL_CERTBOT_CONTAINER};
+    }
+}
+
+# Protected satellite frontend (dev example)
+server {
+    listen 8082;
+    listen [::]:8082;
+    server_name ${NGINX_SERVER_NAME};
+
+    location = /_auth_verify {
+        internal;
+        proxy_pass http://${BACKEND_SERVICE_NAME}:${PORT_BACKEND_AUTH0}/api/validate-token;
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+        proxy_set_header X-Original-URI $request_uri;
+        proxy_set_header X-Forwarded-Access-Token "Bearer $cookie_id_token";
+    }
+
+    location @error401 {
+        return 302 http://${NGINX_SERVER_NAME}:${NGINX_HTTP_PORT};
+    }
+
+    location / {
+        auth_request /_auth_verify;
+        error_page 401 = @error401;
+        proxy_pass http://frontend_sat_image:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}

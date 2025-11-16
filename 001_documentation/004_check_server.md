@@ -94,4 +94,4 @@ ssh -i 002_terraform/ssh/id_ed25519_vps_hetzner root@<server_ipv4>
 [←Index](#index) 
 
 Next step:  
-- [005_test_container_dev_pro](./005_test_container_dev_pro.md)
+- [006_up_development_application](./006_up_development_application.md)

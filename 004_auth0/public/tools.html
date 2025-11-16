@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Professional tools - tonilogar web">
+  <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+  <title>Tools - tonilogar web</title>
+  <link rel="stylesheet" href="css/tools.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <img src="images/logo.gif" alt="Logo de tonilogar" class="logo" />
+      <h1 class="title">tonilogar web</h1>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+      <div class="tools-grid">
+
+        <!-- Portfolio -->
+        <div class="tool-card" data-tooltip="Explore my professional portfolio with development, DevOps and 3D visualization projects">
+          <div class="tool-icon">📁</div>
+          <h3 class="tool-name">Portfolio</h3>
+          <p class="tool-description">Development and DevOps projects</p>
+          <a href="#" class="tool-link" data-dev="http://localhost:8083" data-prod="https://portfolio.tonilogar.com">
+            Access
+          </a>
+        </div>
+        <!-- Satellite Imaging -->
+        <div class="tool-card" data-tooltip="Satellite image analysis and real-time environmental monitoring">
+          <div class="tool-icon">🛰️</div>
+          <h3 class="tool-name">Satellite Imaging</h3>
+          <p class="tool-description">Satellite imagery and environmental monitoring</p>
+          <a href="#" class="tool-link" data-dev="http://localhost:8082" data-prod="https://satellite.tonilogar.com">
+            Access
+          </a>
+        </div>
+        <!-- GIS Tools -->
+        <div class="tool-card" data-tooltip="GIS tools for geospatial analysis and satellite data visualization">
+          <div class="tool-icon">🗺️</div>
+          <h3 class="tool-name">LIDAR GIS Tools</h3>
+          <p class="tool-description">Geographic Information Systems</p>
+          <a href="#" class="tool-link" data-dev="http://localhost:8084" data-prod="https://gis.tonilogar.com">
+            Access
+          </a>
+        </div>
+
+        <!-- Data Science -->
+        <div class="tool-card" data-tooltip="Data Science projects and analytics from Universidad Carlemany studies">
+          <div class="tool-icon">📊</div>
+          <h3 class="tool-name">Data Science</h3>
+          <p class="tool-description">Universidad Carlemany analytics projects</p>
+          <a href="#" class="tool-link" data-dev="https://tonilogar.github.io/" data-prod="https://tonilogar.github.io/">
+            Access
+          </a>
+        </div>
+
+        <!-- 3D Virtual -->
+        <div class="tool-card" data-tooltip="Interactive 3D virtual environments with cutting-edge technologies">
+          <div class="tool-icon">🎮</div>
+          <h3 class="tool-name">3D Virtual</h3>
+          <p class="tool-description">Interactive 3D virtual environments</p>
+          <a href="#" class="tool-link" data-dev="http://localhost:8085" data-prod="https://3d.tonilogar.com">
+            Access
+          </a>
+        </div>
+
+        <!-- AI Tools -->
+        <div class="tool-card" data-tooltip="Artificial Intelligence tools for automated analysis and processing">
+          <div class="tool-icon">🤖</div>
+          <h3 class="tool-name">AI Tools</h3>
+          <p class="tool-description">Artificial Intelligence and analysis</p>
+          <a href="#" class="tool-link" data-dev="http://localhost:8086" data-prod="https://ai.tonilogar.com">
+            Access
+          </a>
+        </div>
+
+        <!-- BIM Modeling -->
+        <div class="tool-card" data-tooltip="BIM modeling for architecture and engineering with project management">
+          <div class="tool-icon">🏗️</div>
+          <h3 class="tool-name">BIM Tools</h3>
+          <p class="tool-description">Modeling for architecture and engineering</p>
+          <a href="#" class="tool-link" data-dev="http://localhost:8087" data-prod="https://bim.tonilogar.com">
+            Access
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+      <button id="logoutBtn" class="logout-btn">Sign out</button>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2024 tonilogar web</p>
+    </footer>
+  </div>
+
+  <!-- Tooltip -->
+  <div id="tooltip" class="tooltip"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+  <script src="js/tools-app.js"></script>
+</body>
+
+</html>

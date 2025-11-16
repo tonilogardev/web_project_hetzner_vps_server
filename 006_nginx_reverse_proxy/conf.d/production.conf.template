@@ -1,0 +1,43 @@
+server {
+    listen ${NGINX_HTTP_PORT};
+    listen [::]:${NGINX_HTTP_PORT};
+    server_name ${NGINX_SERVER_NAME} www.${NGINX_SERVER_NAME};
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+
+    location /.well-known/acme-challenge/ {
+        root ${VOL_CERTBOT_CONTAINER};
+    }
+}
+
+server {
+    listen ${NGINX_HTTPS_PORT} ssl http2;
+    listen [::]:${NGINX_HTTPS_PORT} ssl http2;
+    server_name ${NGINX_SERVER_NAME} www.${NGINX_SERVER_NAME};
+
+    ssl_certificate ${VOL_LETSENCRYPT_CONTAINER}/live/${NGINX_SERVER_NAME}/fullchain.pem;
+    ssl_certificate_key ${VOL_LETSENCRYPT_CONTAINER}/live/${NGINX_SERVER_NAME}/privkey.pem;
+    ssl_protocols ${NGINX_SSL_PROTOCOLS};
+    ssl_prefer_server_ciphers off;
+    ssl_ciphers '${NGINX_SSL_CIPHERS}';
+    ssl_session_timeout ${NGINX_SSL_SESSION_TIMEOUT};
+    ssl_session_cache ${NGINX_SSL_SESSION_CACHE};
+    ssl_session_tickets off;
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    resolver ${NGINX_DNS_RESOLVERS} valid=${NGINX_DNS_RESOLVER_VALID};
+    resolver_timeout ${NGINX_DNS_RESOLVER_TIMEOUT};
+
+    location / {
+        proxy_pass http://${BACKEND_SERVICE_NAME}:${PORT_BACKEND_AUTH0};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
