@@ -7,7 +7,6 @@
 3. [Next steps](#3-next-steps)
 
 
-
 ---
 
 ## 1 Create GitHub repository
