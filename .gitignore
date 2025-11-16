@@ -17,4 +17,4 @@ data/
 002_terraform/ssh/
 
 # env
-.env*
+# (Temporarily allowing .env files for deployment testing. Revisit once secrets are handled via GitHub.)
