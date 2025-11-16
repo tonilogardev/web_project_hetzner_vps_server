@@ -11,5 +11,5 @@ app.get('/health', (_req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Hello world server running work with watch on port ${port}`);
+  console.log(`Hello world server running work with watch in development on port ${port}`);
 });
