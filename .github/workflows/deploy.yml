@@ -46,7 +46,7 @@ jobs:
               git clone "${REPO_SSH_URL}" .
             else
               git remote set-url origin "${REPO_SSH_URL}"
-              git fetch origin "${BRANCH}:${BRANCH}"
+              git fetch origin "${BRANCH}"
             fi
 
             git checkout "${BRANCH}"
