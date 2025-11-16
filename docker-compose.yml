@@ -1,11 +1,20 @@
 services:
   hello-world:
     build:
-      context: ./services/hello
+      context: ./004_test_container_dev_pro
+      args:
+        APP_PORT: ${PORT_004_TEST_CONTAINER_DEV_PRO:-3000}
     container_name: hello_world_app
     restart: unless-stopped
     environment:
       NODE_ENV: ${ENVIRONMENT:-development}
-      PORT: 3000
+      PORT: ${PORT_004_TEST_CONTAINER_DEV_PRO:-3000}
+      COMMAND: ${COMMAND:-start}
+      BASE_URL: ${BASE_URL:-http://localhost:}
     ports:
-      - "${HELLO_WORLD_PORT:-3000}:3000"
+      - "${PORT_004_TEST_CONTAINER_DEV_PRO:-3000}:${PORT_004_TEST_CONTAINER_DEV_PRO:-3000}"
+    volumes:
+      - "${DEV_CODE_VOLUME_HOST:-./004_test_container_dev_pro}:${DEV_CODE_VOLUME_CONTAINER:-/app}"
+      - "${NODE_MODULES_VOLUME_HOST:-004_test_container_dev_pro_node_modules}:${NODE_MODULES_VOLUME_CONTAINER:-/app/node_modules}"
+volumes:
+  004_test_container_dev_pro_node_modules:

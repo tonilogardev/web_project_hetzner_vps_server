@@ -91,5 +91,7 @@ ssh-keygen -R <server_ipv4>
 ssh -i 002_terraform/ssh/id_ed25519_vps_hetzner root@<server_ipv4>
 ```
 
-[←Index](#index)
-```
+[←Index](#index) 
+
+Next step:  
+- [005_test_container_dev_pro](./005_test_container_dev_pro.md)
