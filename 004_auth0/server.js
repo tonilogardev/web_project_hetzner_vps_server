@@ -68,6 +68,7 @@ app.use((req, res, next) => {
 // Se sirven todos los recursos dentro de /public una vez superada la verificación anterior.
 app.use(express.static(join(__dirname, "public")));
 
+
 // === Endpoint para aceptar cookies ===
 // Crea la cookie "cookie_consent" con duración de 1 año y redirige al home.
 app.post("/accept-cookies", (req, res) => {
