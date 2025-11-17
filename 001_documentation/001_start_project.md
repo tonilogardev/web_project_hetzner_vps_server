@@ -6,7 +6,6 @@
 2. [Clone repository in local machine](#2-clone-repository-in-local-machine)  
 3. [Next steps](#3-next-steps)
 
-
 ---
 
 ## 1 Create GitHub repository
